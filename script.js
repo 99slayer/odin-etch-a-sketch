@@ -1,4 +1,8 @@
 let color = 'black';
+let spaceNodeList;
+let mouseDown = false;
+window.onmousedown=()=>{mouseDown=true};
+window.onmouseup=()=>{mouseDown=false};
 
 const clearCanvas = document.querySelector('.clearCanvas');
 const canvasSize = document.querySelector('.canvasSize');
@@ -7,6 +11,11 @@ const gridContainer = document.querySelector('.gridContainer');
 canvasSize.addEventListener('click',()=>{
     gridSize = prompt('Grid size?');
     gridConstruction(gridSize);
+});
+clearCanvas.addEventListener('click',()=>{
+    spaceNodeList.forEach((space) =>{
+        space.style.backgroundColor = 'white';
+    });
 });
 
 function clearChildren(x){
@@ -34,18 +43,20 @@ function gridConstruction(x){
     for(let i=1;i<=x;i++){
         appendToRow(i-1);
     }
+    spaceNodeList = document.querySelectorAll('.space');
+
+    spaceNodeList.forEach((space)=>{
+        space.addEventListener('mousedown',changeColor);
+        space.addEventListener('mouseover',changeColor);
+    });
 }
+
+function changeColor(e){
+    // can i reverse this?
+    if(e.type==='mouseover'&&!mouseDown){return}
+    else{
+        e.target.style.backgroundColor = `${color}`;
+    }
+};
+
 gridConstruction(16);
-
-const spaceNodeList = document.querySelectorAll('.space');
-
-spaceNodeList.forEach((space) => {
-    space.addEventListener('mouseover', () => {
-        space.style.backgroundColor = `${color}`});
-});
-
-clearCanvas.addEventListener('click',()=>{
-    spaceNodeList.forEach((space) =>{
-        space.style.backgroundColor = 'white';
-    })
-})
