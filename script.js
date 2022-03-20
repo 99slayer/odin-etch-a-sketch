@@ -10,6 +10,7 @@ const clearCanvas = document.querySelector('.clearCanvas');
 const canvasSize = document.querySelector('.canvasSize');
 const defaultModeBtn = document.querySelector('.defaultMode');
 const shadingModeBtn = document.querySelector('.shadingMode');
+const randomModeBtn = document.querySelector('.randomMode');
 const gridContainer = document.querySelector('.gridContainer');
 
 defaultModeBtn.addEventListener('click',()=>{
@@ -20,6 +21,10 @@ shadingModeBtn.addEventListener('click',()=>{
     mode = 'shading';
     console.log(mode);
 });
+randomModeBtn.addEventListener('click',()=>{
+    mode = 'random';
+    console.log(mode);
+})
 
 // ----------------TURN INTO FUNCTIONS?--------------------
 canvasSize.addEventListener('click',()=>{
@@ -42,7 +47,6 @@ function clearChildren(x){
         x.removeChild(x.firstChild);
     }
 }
-
 function gridConstruction(x){
     clearChildren(gridContainer);
     for(let i=1;i<=x;i++){
@@ -70,7 +74,6 @@ function gridConstruction(x){
         space.addEventListener('mouseover',draw);
     });
 }
-
 function draw(e){
     // can i reverse this?
     let x = e;
@@ -78,11 +81,16 @@ function draw(e){
     else if(mode=='shading'){
         shadingMode(x);
     }
+    else if(mode=='random'){
+        randomMode(x);
+    }
     else{
         defaultMode(x);
     };
 };
-
+function defaultMode(i){
+    i.target.style.backgroundColor = `${defaultColor}`;
+};
 function shadingMode(i){
     let value = i.target.style.backgroundColor;
     value = value.replace('rgb(','')
@@ -90,12 +98,18 @@ function shadingMode(i){
     if(value>0){
         i.target.style.backgroundColor = `rgb(${value - 25.5},${value - 25.5},${value - 25.5})`;
     }
-}
-function defaultMode(i){
-    i.target.style.backgroundColor = `${defaultColor}`;
 };
-
+function randomMode(i){
+    let r,g,b;
+    r = Math.floor((Math.random()*255)+1);
+    g = Math.floor((Math.random()*255)+1);
+    b = Math.floor((Math.random()*255)+1);
+    if(r==0){++r};
+    if(g==0){++g};
+    if(b==0){++b};
+    i.target.style.backgroundColor = `rgb(${r},${g},${b})`;
+    console.log(r,g,b);
+};
 gridConstruction(16);
-
 // Research button tags in HTML and how you can make a JavaScript function run when one is clicked.
 // make buttons run functions instead of using event listeners? probably less code 'x'
