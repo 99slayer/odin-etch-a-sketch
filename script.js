@@ -6,8 +6,6 @@ let mouseDown = false;
 window.onmousedown=()=>{mouseDown=true};
 window.onmouseup=()=>{mouseDown=false};
 
-const clearCanvas = document.querySelector('.clearCanvas');
-const canvasSize = document.querySelector('.canvasSize');
 const defaultModeBtn = document.querySelector('.defaultMode');
 const darkenBtn = document.querySelector('.darken');
 const lightenBtn = document.querySelector('.lighten');
@@ -31,22 +29,19 @@ randomModeBtn.addEventListener('click',()=>{
     console.log(mode);
 });
 // functions? ^^
-// ----------------TURN INTO FUNCTIONS?--------------------
-canvasSize.addEventListener('click',()=>{
-    gridSize = prompt('Grid size?');
-    if(gridSize>100){
-        alert('please choose a grid size of 100 or less.')
+function changeCanvasSize(){
+    canvasSize = prompt('Please choose a canvas size.');
+    if(canvasSize>100){
+        alert('please choose a canvas size of 100 or less.')
         return;
     };
-    gridConstruction(gridSize);
-});
-clearCanvas.addEventListener('click',()=>{
+    gridConstruction(canvasSize);
+};
+function clearCanvas(){
     spaceNodeList.forEach((space) =>{
         space.style.backgroundColor = 'white';
     });
-});
-// -------------------------------------------------------
-
+};
 function clearChildren(x){
     while(x.firstChild){
         x.removeChild(x.firstChild);
@@ -127,5 +122,3 @@ function randomMode(i){
     console.log(r,g,b);
 };
 gridConstruction(16);
-// Research button tags in HTML and how you can make a JavaScript function run when one is clicked.
-// make buttons run functions instead of using event listeners? probably less code 'x'
