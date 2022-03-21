@@ -9,7 +9,8 @@ window.onmouseup=()=>{mouseDown=false};
 const clearCanvas = document.querySelector('.clearCanvas');
 const canvasSize = document.querySelector('.canvasSize');
 const defaultModeBtn = document.querySelector('.defaultMode');
-const shadingModeBtn = document.querySelector('.shadingMode');
+const darkenBtn = document.querySelector('.darken');
+const lightenBtn = document.querySelector('.lighten');
 const randomModeBtn = document.querySelector('.randomMode');
 const gridContainer = document.querySelector('.gridContainer');
 
@@ -17,15 +18,19 @@ defaultModeBtn.addEventListener('click',()=>{
     mode = 'default';
     console.log(mode);
 });
-shadingModeBtn.addEventListener('click',()=>{
-    mode = 'shading';
+darkenBtn.addEventListener('click',()=>{
+    mode = 'darken';
+    console.log(mode);
+});
+lightenBtn.addEventListener('click',()=>{
+    mode = 'lighten';
     console.log(mode);
 });
 randomModeBtn.addEventListener('click',()=>{
     mode = 'random';
     console.log(mode);
-})
-
+});
+// functions? ^^
 // ----------------TURN INTO FUNCTIONS?--------------------
 canvasSize.addEventListener('click',()=>{
     gridSize = prompt('Grid size?');
@@ -69,17 +74,23 @@ function gridConstruction(x){
     spaceNodeList = document.querySelectorAll('.space');
 
     spaceNodeList.forEach((space)=>{
-        space.style.backgroundColor = 'rgb(255,255,255)'
+        space.style.backgroundColor = 'rgb(255,255,255)';
         space.addEventListener('mousedown',draw);
         space.addEventListener('mouseover',draw);
+        space.addEventListener('click',(e)=>{
+            console.log(e.target.style.backgroundColor);
+        });
     });
 }
 function draw(e){
     // can i reverse this?
     let x = e;
     if(x.type==='mouseover'&&!mouseDown){return}
-    else if(mode=='shading'){
-        shadingMode(x);
+    else if(mode=='darken'){
+        darken(x);
+    }
+    else if(mode=='lighten'){
+        lighten(x);
     }
     else if(mode=='random'){
         randomMode(x);
@@ -91,13 +102,18 @@ function draw(e){
 function defaultMode(i){
     i.target.style.backgroundColor = `${defaultColor}`;
 };
-function shadingMode(i){
-    let value = i.target.style.backgroundColor;
-    value = value.replace('rgb(','')
-    value = parseInt(value);
-    if(value>0){
-        i.target.style.backgroundColor = `rgb(${value - 25.5},${value - 25.5},${value - 25.5})`;
-    }
+function darken(i){
+    let current = i.target.style.backgroundColor;
+    current = current.replace(/[rgb()]/g,'');
+    let rgb = current.split(',');
+    i.target.style.backgroundColor = `rgb(${rgb[0]-25.5},${rgb[1]-25.5},${rgb[2]-25.5})`;
+};
+function lighten(i){
+    let current = i.target.style.backgroundColor;
+    current = current.replace(/[rgb()]/g,'');
+    let rgb = current.split(',');
+    console.log(rgb);
+    i.target.style.backgroundColor = `rgb(${rgb[0]+25.5},${rgb[1]+25.5},${rgb[2]+25.5})`;
 };
 function randomMode(i){
     let r,g,b;
