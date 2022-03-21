@@ -72,13 +72,12 @@ function gridConstruction(x){
         space.style.backgroundColor = 'rgb(255,255,255)';
         space.addEventListener('mousedown',draw);
         space.addEventListener('mouseover',draw);
-        space.addEventListener('click',(e)=>{
-            console.log(e.target.style.backgroundColor);
-        });
+        // space.addEventListener('click',(e)=>{
+        //     console.log(e.target);
+        // });
     });
 }
 function draw(e){
-    // can i reverse this?
     let x = e;
     if(x.type==='mouseover'&&!mouseDown){return}
     else if(mode=='darken'){
@@ -107,8 +106,7 @@ function lighten(i){
     let current = i.target.style.backgroundColor;
     current = current.replace(/[rgb()]/g,'');
     let rgb = current.split(',');
-    console.log(rgb);
-    i.target.style.backgroundColor = `rgb(${rgb[0]+25.5},${rgb[1]+25.5},${rgb[2]+25.5})`;
+    i.target.style.backgroundColor = `rgb(${parseInt(rgb[0])+25.5},${parseInt(rgb[1])+25.5},${parseInt(rgb[2])+25.5})`;
 };
 function randomMode(i){
     let r,g,b;
