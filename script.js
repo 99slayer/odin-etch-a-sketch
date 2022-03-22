@@ -10,6 +10,7 @@ const defaultModeBtn = document.querySelector('.defaultMode');
 const darkenBtn = document.querySelector('.darken');
 const lightenBtn = document.querySelector('.lighten');
 const randomModeBtn = document.querySelector('.randomMode');
+const eraserBtn = document.querySelector('.eraser');
 const gridContainer = document.querySelector('.gridContainer');
 
 defaultModeBtn.addEventListener('click',()=>{
@@ -26,6 +27,10 @@ lightenBtn.addEventListener('click',()=>{
 });
 randomModeBtn.addEventListener('click',()=>{
     mode = 'random';
+    console.log(mode);
+});
+eraserBtn.addEventListener('click',()=>{
+    mode = 'eraser'
     console.log(mode);
 });
 // functions? ^^
@@ -72,9 +77,9 @@ function gridConstruction(x){
         space.style.backgroundColor = 'rgb(255,255,255)';
         space.addEventListener('mousedown',draw);
         space.addEventListener('mouseover',draw);
-        // space.addEventListener('click',(e)=>{
-        //     console.log(e.target);
-        // });
+        space.addEventListener('click',(e)=>{
+            console.log(e.button);
+        });
     });
 }
 function draw(e){
@@ -88,6 +93,9 @@ function draw(e){
     }
     else if(mode=='random'){
         randomMode(x);
+    }
+    else if(mode=='eraser'){
+        eraser(x)
     }
     else{
         defaultMode(x);
@@ -118,5 +126,8 @@ function randomMode(i){
     if(b==0){++b};
     i.target.style.backgroundColor = `rgb(${r},${g},${b})`;
     console.log(r,g,b);
+};
+function eraser(i){
+    i.target.style.backgroundColor = 'rgb(255,255,255)';
 };
 gridConstruction(16);
