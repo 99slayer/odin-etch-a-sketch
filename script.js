@@ -33,7 +33,7 @@ eraserBtn.addEventListener('click',()=>{
     mode = 'eraser'
     console.log(mode);
 });
-// functions? ^^
+
 function changeCanvasSize(){
     canvasSize = prompt('Please choose a canvas size.');
     if(canvasSize>100){
